@@ -8,7 +8,7 @@ use Dancer2;
 use Dancer2::Plugin;
 use WWW::Sixpack;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 my $conf;
 
@@ -88,6 +88,8 @@ The client_id will be fetched from session, or generated if needed.
 The client's IP address and user agent string are automatically
 added to the request for bot detection.
 
+Alternatives can be forced by params like "sixpack-force-$experiment=$alt"
+
 Returns the alternative name chosen.
 
 =cut
@@ -108,6 +110,10 @@ register experiment => sub {
            if $dsl->request->address;
        $options{user_agent} = $dsl->request->agent
            if $dsl->request->agent;
+
+    # force if requested
+    $options{force} = $dsl->param("sixpack-force-$name")
+        if $dsl->param("sixpack-force-$name");
 
     my $alt = $sixpack
         ->participate( $name, $alternatives, \%options );

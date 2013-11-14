@@ -75,6 +75,8 @@ The client\_id will be fetched from session, or generated if needed.
 The client's IP address and user agent string are automatically
 added to the request for bot detection.
 
+Alternatives can be forced by params like "sixpack-force-$experiment=$alt"
+
 Returns the alternative name chosen.
 
 ## convert
